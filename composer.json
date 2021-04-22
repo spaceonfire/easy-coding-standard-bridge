@@ -1,7 +1,7 @@
 {
   "name": "spaceonfire/easy-coding-standard-bridge",
-  "type": "library",
   "description": "Easy Coding Standard Bridge by spaceonfire",
+  "type": "library",
   "keywords": [
     "code-style",
     "code-standard",
@@ -13,16 +13,16 @@
   "homepage": "https://github.com/spaceonfire/easy-coding-standard-bridge",
   "license": "MIT",
   "require": {
-    "php": "^7.2|^8.0"
+    "php": "^7.4|^8.0"
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",
     "slevomat/coding-standard": "^7.0",
     "symfony/var-exporter": "^5.1",
-    "symplify/easy-coding-standard": "^9.2"
+    "symplify/easy-coding-standard": "^9.4"
   },
   "suggest": {
-    "symplify/easy-coding-standard-prefixed": "^9.2",
+    "symplify/easy-coding-standard-prefixed": "^9.4",
     "slevomat/coding-standard": "^7.0",
     "symfony/var-exporter": "Required for ecs-baseliner"
   },
@@ -30,11 +30,6 @@
     "bin/ecs-baseliner.php",
     "bin/ecs-init.php"
   ],
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.5-dev"
-    }
-  },
   "config": {
     "sort-packages": true
   }

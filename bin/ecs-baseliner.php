@@ -26,7 +26,7 @@ try {
 
     $errorFiles = $arguments;
 
-    if (count($errorFiles) === 0) {
+    if (0 === count($errorFiles)) {
         echo <<<HELP
 Collect errors to skip first:
 
@@ -56,7 +56,7 @@ HELP;
     // compile
     $errorFiles = find_error_files($errorFiles);
 
-    if (count($errorFiles) === 0) {
+    if (0 === count($errorFiles)) {
         throw new InvalidArgumentException('Files not found.');
     }
 

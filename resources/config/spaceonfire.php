@@ -45,6 +45,7 @@ use PhpCsFixer\Fixer\FunctionNotation\NoSpacesAfterFunctionNameFixer;
 use PhpCsFixer\Fixer\FunctionNotation\NullableTypeDeclarationForDefaultNullValueFixer;
 use PhpCsFixer\Fixer\FunctionNotation\ReturnTypeDeclarationFixer;
 use PhpCsFixer\Fixer\FunctionNotation\VoidReturnFixer;
+use PhpCsFixer\Fixer\Import\GlobalNamespaceImportFixer;
 use PhpCsFixer\Fixer\Import\NoLeadingImportSlashFixer;
 use PhpCsFixer\Fixer\Import\NoUnusedImportsFixer;
 use PhpCsFixer\Fixer\Import\OrderedImportsFixer;
@@ -90,6 +91,7 @@ use PhpCsFixer\Fixer\Whitespace\NoWhitespaceInBlankLineFixer;
 use PhpCsFixer\Fixer\Whitespace\SingleBlankLineAtEofFixer;
 use SlevomatCodingStandard\Sniffs\Classes\ParentCallSpacingSniff;
 use SlevomatCodingStandard\Sniffs\Classes\TraitUseDeclarationSniff;
+use SlevomatCodingStandard\Sniffs\Classes\TraitUseSpacingSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\DisallowCommentAfterCodeSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\EmptyCommentSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\RequireShortTernaryOperatorSniff;
@@ -164,6 +166,14 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // Namespaces
     $services->set(NoUnusedImportsFixer::class);
     $services->set(SingleBlankLineBeforeNamespaceFixer::class);
+    $services->set(GlobalNamespaceImportFixer::class)
+        ->call('configure', [
+            [
+                'import_classes' => false,
+                'import_constants' => false,
+                'import_functions' => false,
+            ],
+        ]);
 
     // Spaces
     $services->set(StandaloneLinePromotedPropertyFixer::class);
@@ -188,7 +198,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ],
         ]);
 
-    $services->set(ClassAttributesSeparationFixer::class);
     $services->set(SingleTraitInsertPerStatementFixer::class);
     $services->set(FunctionTypehintSpaceFixer::class);
     $services->set(PhpdocSingleLineVarSpacingFixer::class);
@@ -197,9 +206,16 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(NoWhitespaceInBlankLineFixer::class);
     $services->set(SpaceAfterSemicolonFixer::class);
     $services->set(LanguageConstructSpacingSniff::class);
+//    $services->set(FullyQualifiedGlobalFunctionsSniff::class);
+//    $services->set(FullyQualifiedGlobalConstantsSniff::class);
     // TODO: check this sniffs
     $services->set(ParentCallSpacingSniff::class);
     $services->set(DuplicateSpacesSniff::class);
+    $services->set(TraitUseSpacingSniff::class)
+        ->property('linesCountAfterLastUse', 1)
+        ->property('linesCountAfterLastUseWhenLastInClass', 0)
+        ->property('linesCountBeforeFirstUse', 0)
+        ->property('linesCountBetweenUses', 0);
 
     // Strict
     $services->set(StrictComparisonFixer::class);
@@ -282,7 +298,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(ClassDefinitionFixer::class)
         ->call('configure', [
             [
-                'single_line' => true,
+                'single_item_single_line' => true,
             ],
         ]);
     $services->set(VisibilityRequiredFixer::class)
